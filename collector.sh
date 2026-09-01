@@ -1,7 +1,7 @@
 #!/bin/bash
 # Enterprise Log Pipeline - Data Collector Agent
 
-LOG_FILE="app_master.log"
+LOG_FILE="app_feature.log"
 TIMESTAMP=$(date "+%Y-%m-%d %H:%M:%S")
 CPU_USAGE=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
 MEM_FREE=$(free -m | awk '/Mem:/ {print $4}')
