@@ -1,0 +1,25 @@
+name: DevOps CI Pipeline
+
+# 1. מתי הרובוט מתעורר לחיים? בכל Push או Pull Request ל-main/master
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+# 2. מה המשימות שהרובוט צריך לבצע?
+jobs:
+  build-and-test:
+    runs-on: ubuntu-latest # הרצת המשימה על שרת אובונטו נקי בענן של GitHub
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4 # הורדת הקוד מהמאגר אל השרת בענן
+
+      - name: Say Hello from CI
+        run: echo "Hello Samuel! CI/CD Pipeline initialized successfully."
+
+      - name: Check Environment
+        run: |
+          docker --version
+          git --version

@@ -1,13 +1,11 @@
 global:
-  scrape_interval: 15s # לבדוק מטריקות כל 15 שניות
+  scrape_interval: 15s
 
 scrape_configs:
-  # מטרה 1: פרומתאוס מנטר את עצמו
   - job_name: 'prometheus'
     static_configs:
       - targets: ['localhost:9090']
 
-  # מטרה 2: ניטור השרת המארח / הלוג קולקטור שלנו
   - job_name: 'log-collector-node'
     static_configs:
-      - targets: ['host.docker.internal:9000']
+      - targets: ['host.docker.internal:9100']
