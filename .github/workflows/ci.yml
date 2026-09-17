@@ -2,20 +2,33 @@ name: DevOps CI Pipeline
 
 on:
   push:
-    branches: [ main, master ]
+    branches: [ "master" ]
   pull_request:
-    branches: [ main, master ]
+    branches: [ "master" ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout Code
-        uses: actions/checkout@v4
+    - name: Checkout repository code
+      uses: actions/checkout@v4
 
-      - name: Make test script executable
-        run: chmod +x test.sh
+    - name: Set permissions for scripts
+      run: chmod +x test.sh collector.sh
 
-      - name: Run Automated Tests
-        run: ./test.sh
+    - name: Run Automated Tests
+      run: ./test.sh
+
+    - name: Log in to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        username: ${{ secrets.DOCKERHUB_USERNAME }}
+        password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      uses: docker/build-push-action@v5
+      with:
+        context: .
+        push: true
+        tags: ${{ secrets.DOCKERHUB_USERNAME }}/devops-log-pipeline:latest
